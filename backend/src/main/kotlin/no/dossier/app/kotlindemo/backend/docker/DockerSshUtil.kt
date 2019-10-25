@@ -1,11 +1,13 @@
 package no.dossier.app.kotlindemo.backend.docker
 
-import java.io.IOException
 
 import com.jcabi.ssh.Shell
 import com.jcabi.ssh.Ssh
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.soywiz.klock.DateFormat
+import com.soywiz.klock.DateTime
+import com.soywiz.klock.parse
+import no.dossier.app.kotlindemo.domain.docker.DockerContainer
+import no.dossier.app.kotlindemo.domain.docker.StatusType
 import java.util.*
 
 object DockerSshUtil {
@@ -42,14 +44,20 @@ object DockerSshUtil {
 
 
     fun getDockerContainers(): List<DockerContainer> {
-        val stdout = executeSshCmd("docker ps -q | xargs docker inspect --format='{{.Id}}|{{.State.StartedAt}}|{{.Name}}|{{.State.Status}}'")
+        val stdout = executeSshCmd("docker ps -q | xargs docker inspect --format='{{.Id}}|{{.Name}}|{{.State.Status}}|{{.Created}}|{{.State.StartedAt}}'")
 
         val containers = ArrayList<DockerContainer>()
         val lines = stdout.split("\n")
         for (line in lines) {
             val lineParts = line.split("|")
-            if (lineParts.size == 4) {
-                val dockerContainer = DockerContainer(lineParts[0], lineParts[2].removePrefix("/"), lineParts[3], parseDate(lineParts[1]));
+            if (lineParts.size == 5) {
+                val dockerContainer = DockerContainer(
+                        lineParts[0],
+                        lineParts[1].removePrefix("/"),
+                        parseStatusType(lineParts[2]),
+                        parseDateTime(lineParts[1]),
+                        parseDateTime(lineParts[1]));
+
                 containers.add(dockerContainer)
             }
         }
@@ -60,11 +68,16 @@ object DockerSshUtil {
         return executeSshCmd("docker stop $containerId");
     }
 
-    fun parseDate(dateStr: String): LocalDate {
-        return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.n'Z'"))
+    private fun parseStatusType(statusStr: String): StatusType {
+        return StatusType.valueOf(statusStr)
     }
 
-    fun executeSshCmd(cmd: String) : String {
+    private fun parseDateTime(dateStr: String): DateTime {
+        val dateFormat: DateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.n'Z'")
+        return dateFormat.parse(dateStr).local;
+    }
+
+    private fun executeSshCmd(cmd: String) : String {
         val shell = Ssh("internal.dossier.no", 22, "ec2-user", SSH_KEY, "ec2-user")
         return Shell.Plain(shell).exec(cmd);
     }
