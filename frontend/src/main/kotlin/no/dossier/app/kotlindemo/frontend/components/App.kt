@@ -36,6 +36,17 @@ class App : RComponent<RProps, AppState>() {
         state.dockerContainers = mutableListOf()
     }
 
+    @ImplicitReflectionSerializer
+    override fun componentDidMount() {
+        window.fetch(RestEndpoint.GetAllConnections.value).then {
+            it.text()
+        }.then {
+            setState {
+                dockerContainers = Json.parse(DockerContainer::class.serializer().list, it).toMutableList()
+            }
+        }
+    }
+
     private fun handleSendMessage(message: String) {
         stompClient.send(WsEndpoint.SendChatMessage.prefixedUrl,
                 getDefaultSendOptions(), Json.stringify(Message.ChatMessage.serializer(),Message.ChatMessage(message)))

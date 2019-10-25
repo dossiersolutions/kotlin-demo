@@ -27,9 +27,6 @@ class ContainersList : RComponent<RProps, RState>() {
                                 + "Status"
                             }
                             th {
-                                + "Image"
-                            }
-                            th {
                                 + "Ports"
                             }
                             th {
@@ -51,9 +48,6 @@ class ContainersList : RComponent<RProps, RState>() {
                                 }
                                 td {
                                     it.status.toString()
-                                }
-                                td {
-                                    it.image
                                 }
                                 td {
                                     + "Ports"
