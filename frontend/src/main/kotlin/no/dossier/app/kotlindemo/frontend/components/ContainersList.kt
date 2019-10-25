@@ -1,5 +1,6 @@
 package no.dossier.app.kotlindemo.frontend.components
 
+import kotlinx.html.js.onClickFunction
 import no.dossier.app.kotlindemo.frontend.components.stylesheet.ContainersListStyles
 import react.*
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
@@ -8,6 +9,11 @@ import styled.css
 import styled.styledDiv
 
 class ContainersList : RComponent<RProps, RState>() {
+
+    private fun stopDockerContainer() {
+
+    }
+
     override fun RBuilder.render() {
         appContext.Consumer { state ->
             styledDiv {
@@ -26,9 +32,9 @@ class ContainersList : RComponent<RProps, RState>() {
                             th {
                                 + "Status"
                             }
-                            th {
-                                + "Ports"
-                            }
+//                            th {
+//                                + "Ports"
+//                            }
                             th {
                                 + "Created at"
                             }
@@ -44,19 +50,26 @@ class ContainersList : RComponent<RProps, RState>() {
                                     it.id
                                 }
                                 td {
-                                    + "Name"
+                                    it.name
                                 }
                                 td {
                                     it.status.toString()
                                 }
-                                td {
-                                    + "Ports"
-                                }
+//                                td {
+//                                    + "Ports"
+//                                }
                                 td {
                                     + it.created.toString()
                                 }
                                 td {
-                                    + "Actions - $it"
+                                    button(classes = "btn btn-dang") {
+                                        + "Stop container"
+                                        attrs {
+                                            onClickFunction = {
+                                                stopDockerContainer()
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

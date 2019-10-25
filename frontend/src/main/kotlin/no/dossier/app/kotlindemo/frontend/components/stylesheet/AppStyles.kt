@@ -9,7 +9,7 @@ object AppStyles : StyleSheet("AppStyles") {
         marginBottom = LinearDimension("20px")
     }
     val footer by css {
-        position = Position.absolute
+        position = Position.fixed
         bottom = LinearDimension(0.toString())
         height = LinearDimension("40px")
     }
@@ -18,5 +18,9 @@ object AppStyles : StyleSheet("AppStyles") {
     }
     val mainTitle by css {
 
+    }
+    val subTitle by css {
+        fontStyle =  FontStyle.italic
+        fontWeight = FontWeight.bold
     }
 }

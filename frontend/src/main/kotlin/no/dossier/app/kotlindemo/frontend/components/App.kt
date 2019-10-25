@@ -1,6 +1,5 @@
 package no.dossier.app.kotlindemo.frontend.components
 
-import kotlinx.html.style
 import kotlinx.serialization.ImplicitReflectionSerializer
 import react.*
 import react.dom.*
@@ -10,8 +9,10 @@ import kotlinx.serialization.list
 import kotlinx.serialization.serializer
 import no.dossier.app.kotlindemo.api.*
 import no.dossier.app.kotlindemo.config.AppConfig
+import no.dossier.app.kotlindemo.domain.bitbucket.BitBucketBranch
 import no.dossier.app.kotlindemo.domain.docker.DockerContainer
 import no.dossier.app.kotlindemo.frontend.components.stylesheet.AppStyles
+import no.dossier.app.kotlindemo.frontend.constainsts.Pages
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
 import no.dossier.app.kotlindemo.frontend.wrappers.*
 import styled.css
@@ -19,12 +20,15 @@ import styled.styledDiv
 
 interface AppState: RState {
     //variables
+    var loading: Boolean
+    var page: Pages
 
     //actions
     var connected: Boolean
     var connections: MutableList<String>
     var dockerContainers: MutableList<DockerContainer>
-    var loading: Boolean
+    var bitBucketBranches: MutableList<BitBucketBranch>
+    var setPage: (Pages) -> Unit
 }
 
 class App : RComponent<RProps, AppState>() {
@@ -34,21 +38,44 @@ class App : RComponent<RProps, AppState>() {
     private var stompClient: Stomp = connect()
 
     init {
+        state.page = Pages.dockerContainersPage
         state.loading = false
         state.connections = mutableListOf()
         state.dockerContainers = mutableListOf()
-    }
+        state.bitBucketBranches = mutableListOf()
 
-    @ImplicitReflectionSerializer
-    override fun componentDidMount() {
-        window.fetch(RestEndpoint.GetAllDockerContainers.value).then {
-            it.text()
-        }.then {
-            setState {
-                dockerContainers = Json.parse(DockerContainer::class.serializer().list, it).toMutableList()
+        state.setPage = {
+            setState{
+                page = it
             }
         }
     }
+
+//    @ImplicitReflectionSerializer
+//    override fun componentDidMount() {
+//        setState{
+//            loading = true
+//        }
+//        if (state.page === Pages.dockerContainersPage) {
+//            window.fetch(RestEndpoint.GetAllDockerContainers.value).then {
+//                it.text()
+//            }.then {
+//                setState {
+//                    dockerContainers = Json.parse(DockerContainer::class.serializer().list, it).toMutableList()
+//                    loading = false
+//                }
+//            }
+//        } else {
+//            window.fetch(RestEndpoint.GetAllBitBucketBranches.value).then {
+//                it.text()
+//            }.then {
+//                setState {
+//                    bitBucketBranches = Json.parse(BitBucketBranch::class.serializer().list, it).toMutableList()
+//                    loading = false
+//                }
+//            }
+//        }
+//    }
 
     private fun handleSendMessage(message: String) {
         stompClient.send(WsEndpoint.SendChatMessage.prefixedUrl,
@@ -84,6 +111,7 @@ class App : RComponent<RProps, AppState>() {
                         AppStyles.main
                     }
                     header()
+                    menu()
                     containersList()
                     footer()
                 }
