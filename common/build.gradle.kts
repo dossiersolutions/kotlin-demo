@@ -57,6 +57,7 @@ kotlin {
             dependencies {
                 implementation(Dependencies.kotlinx_serialization_runtime_js)
                 implementation(kotlin("stdlib-js"))
+                implementation(Dependencies.klock_js)
             }
         }
 
