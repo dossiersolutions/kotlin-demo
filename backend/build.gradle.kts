@@ -9,6 +9,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 plugins {
 	id("org.springframework.boot")
 	id("io.spring.dependency-management")
+	id("kotlinx-serialization")
 	kotlin("jvm")
 	kotlin("plugin.spring")
 }
@@ -20,12 +21,16 @@ repositories {
 	maven { url = uri(Repositories.spring_milestone) }
 	maven { url = uri(Repositories.kotlin_kotlinx) }
 	maven { url = uri(Repositories.jcabi_ssh) }
+	maven { url = uri(Repositories.maven2_central) }
 }
 
 kotlin {
 	sourceSets {
+
 		val main by getting {
 			dependencies {
+				implementation("org.apache.httpcomponents:httpclient:4.5.10")
+				implementation("commons-io:commons-io:2.6")
 				implementation(project(Modules.common))
 				implementation(kotlin("reflect"))
 				implementation(kotlin("stdlib-jdk8"))
