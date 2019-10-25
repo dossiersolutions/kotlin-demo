@@ -72,8 +72,14 @@ object DockerSshUtil {
         return StatusType.valueOf(statusStr)
     }
 
+
+//    @JvmStatic
+//    fun main(args: Array<String>) {
+//        println(parseDateTime("2019-03-19T12:22:06.159971014Z"))
+//    }
+//
     private fun parseDateTime(dateStr: String): DateTime {
-        val dateFormat: DateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.n'Z'")
+        val dateFormat: DateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.n")
         return dateFormat.parse(dateStr).local;
     }
 

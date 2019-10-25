@@ -28,12 +28,16 @@ enum class WsEndpoint(val value: String) {
 
 enum class RestEndpoint(val value: String) {
     GetUser(Urls.GET_USER),
-    GetAllConnections(Urls.GET_ALL_CONNECTIONS);
+    GetAllConnections(Urls.GET_ALL_CONNECTIONS),
+    GetAllDockerContainers(Urls.GET_DOCKER_CONTAINERS),
+    KillDockerContainer(Urls.KILL_DOCKER_CONTAINER);
 
     class Urls {
         companion object {
             const val GET_USER = "/users/{userId}"
             const val GET_ALL_CONNECTIONS = "/connections/all"
+            const val GET_DOCKER_CONTAINERS = "/dockercontainers/all"
+            const val KILL_DOCKER_CONTAINER = "/dockercontainers/{containerId}"
         }
     }
 }
