@@ -30,7 +30,8 @@ enum class RestEndpoint(val value: String) {
     GetUser(Urls.GET_USER),
     GetAllConnections(Urls.GET_ALL_CONNECTIONS),
     GetAllDockerContainers(Urls.GET_DOCKER_CONTAINERS),
-    StopDockerContainer(Urls.STOP_DOCKER_CONTAINER);
+    StopDockerContainer(Urls.STOP_DOCKER_CONTAINER),
+    GetAllBitBucketBranches(Urls.GET_BB_BRANCHES);
 
     class Urls {
         companion object {
@@ -38,6 +39,7 @@ enum class RestEndpoint(val value: String) {
             const val GET_ALL_CONNECTIONS = "/connections/all"
             const val GET_DOCKER_CONTAINERS = "/dockercontainers/all"
             const val STOP_DOCKER_CONTAINER = "/dockercontainers/{containerId}/stop"
+            const val GET_BB_BRANCHES = "/bitbucket/branches/all"
         }
     }
 }

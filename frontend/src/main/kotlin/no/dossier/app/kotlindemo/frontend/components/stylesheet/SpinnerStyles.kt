@@ -14,5 +14,6 @@ object SpinnerStyles : StyleSheet("SpinnerStyles") {
         display = Display.flex
         alignItems = Align.center
         justifyContent = JustifyContent.center
+        zIndex = 9999
     }
 }

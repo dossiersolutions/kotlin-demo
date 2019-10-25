@@ -42,6 +42,7 @@ kotlin {
 				implementation("org.springframework.boot:spring-boot-devtools")
 				implementation(Dependencies.klock_jvm)
 				implementation("com.jcabi:jcabi-ssh:1.6.1")
+				implementation("com.jayway.jsonpath:json-path:2.3.0")
 			}
 		}
 		val test by getting {
