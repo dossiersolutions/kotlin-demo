@@ -7,4 +7,7 @@ object Repositories {
 
     const val spring_snapshot = "https://repo.spring.io/snapshot"
     const val spring_milestone = "https://repo.spring.io/milestone"
+    const val maven2_central = "https://repo.maven.apache.org/maven2/"
+    const val jcabi_ssh = "https://oss.sonatype.org/content/repositories/snapshots/"
+
 }
