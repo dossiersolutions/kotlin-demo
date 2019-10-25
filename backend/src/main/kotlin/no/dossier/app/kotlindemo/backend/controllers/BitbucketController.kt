@@ -3,8 +3,10 @@ package no.dossier.app.kotlindemo.backend.controllers
 import no.dossier.app.kotlindemo.api.RestEndpoint
 import no.dossier.app.kotlindemo.backend.bitbucket.client.JsonUtil
 import no.dossier.app.kotlindemo.backend.bitbucket.client.getAllBranches
+import no.dossier.app.kotlindemo.backend.bitbucket.client.startPipelineBuild
 import no.dossier.app.kotlindemo.domain.bitbucket.BitBucketBranch
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 
 import org.springframework.web.bind.annotation.RestController
 
@@ -26,5 +28,10 @@ class BitbucketController {
             branches.add(bitBucketBranch)
         }
         return branches
+    }
+
+    @GetMapping(RestEndpoint.Urls.START_BB_PIPELINE)
+    fun getStartPipelineBuild(@PathVariable branchName: String){
+        startPipelineBuild(branchName)
     }
 }
