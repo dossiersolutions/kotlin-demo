@@ -29,6 +29,7 @@ interface AppState: RState {
     var dockerContainers: MutableList<DockerContainer>
     var bitBucketBranches: MutableList<BitBucketBranch>
     var setPage: (Pages) -> Unit
+    var startPipLine: (String) -> Unit
 }
 
 class App : RComponent<RProps, AppState>() {
@@ -48,6 +49,14 @@ class App : RComponent<RProps, AppState>() {
         state.setPage = {
             setState{
                 page = it
+            }
+        }
+
+        state.startPipLine = {
+            window.fetch(RestEndpoint.StartBitBucketPipeline.value + "?branchName=${it}").then {
+                setState {
+                    reload = true
+                }
             }
         }
     }

@@ -2,7 +2,9 @@ package no.dossier.app.kotlindemo.frontend.components
 
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTime
+import kotlinext.js.js
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.style
 import no.dossier.app.kotlindemo.frontend.components.stylesheet.ContainersListStyles
 import react.*
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
@@ -11,10 +13,6 @@ import styled.css
 import styled.styledDiv
 
 class BranchesList : RComponent<RProps, RState>() {
-
-    private fun startPipLine() {
-
-    }
 
     override fun RBuilder.render() {
         appContext.Consumer { state ->
@@ -46,38 +44,58 @@ class BranchesList : RComponent<RProps, RState>() {
                         }
                     }
                     tbody {
-                        state.bitBucketBranches.forEach {
+                        state.bitBucketBranches.forEach { branch ->
                             tr {
                                 td {
-                                    + it.name
-                                }
-                                td {
-                                    a {
-                                        attrs {
-                                            href = it.url
-                                        }
-                                        + it.url
+                                    + branch.name
+                                    attrs.style = js {
+                                        wordBreak = "break-all"
+                                        minWidth = "200px"
                                     }
                                 }
                                 td {
                                     a {
                                         attrs {
-                                            href = it.branchLink
+                                            href = branch.url
                                         }
-                                        + it.branchLink
+                                        + branch.url
+                                    }
+                                    attrs.style = js {
+                                        wordBreak = "break-all"
+                                        minWidth = "200px"
                                     }
                                 }
                                 td {
-                                    + it.lastCommitInfo.first
+                                    a {
+                                        attrs {
+                                            href = branch.branchLink
+                                        }
+                                        + branch.branchLink
+                                    }
+                                    attrs.style = js {
+                                        wordBreak = "break-all"
+                                        minWidth = "200px"
+                                    }
                                 }
                                 td {
-                                    + DateTime(it.lastCommitInfo.second).toString(DateFormat.FORMAT_DATE)
+                                    + branch.lastCommitInfo.first
+                                    attrs.style = js {
+                                        wordBreak = "break-all"
+                                        minWidth = "200px"
+                                    }
+                                }
+                                td {
+                                    + DateTime(branch.lastCommitInfo.second).toString(DateFormat.FORMAT_DATE)
+                                    attrs.style = js {
+                                        wordBreak = "break-all"
+                                        minWidth = "200px"
+                                    }
                                 }
                                 button(classes = "btn btn-danger") {
                                     + "Start pipline"
                                     attrs {
                                         onClickFunction = {
-                                            startPipLine()
+                                            state.startPipLine(branch.name)
                                         }
                                     }
                                 }

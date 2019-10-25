@@ -31,7 +31,8 @@ enum class RestEndpoint(val value: String) {
     GetAllConnections(Urls.GET_ALL_CONNECTIONS),
     GetAllDockerContainers(Urls.GET_DOCKER_CONTAINERS),
     StopDockerContainer(Urls.STOP_DOCKER_CONTAINER),
-    GetAllBitBucketBranches(Urls.GET_BB_BRANCHES);
+    GetAllBitBucketBranches(Urls.GET_BB_BRANCHES),
+    StartBitBucketPipeline(Urls.START_BB_PIPELINE);
 
     class Urls {
         companion object {

@@ -16,6 +16,7 @@ val defaultState = object : AppState {
     override var dockerContainers: MutableList<DockerContainer> = mutableListOf()
     override var bitBucketBranches: MutableList<BitBucketBranch> = mutableListOf()
     override var setPage: (Pages) -> Unit = {}
+    override var startPipLine: (String) -> Unit = {}
 }
 
 val appContext = createContext(defaultState)
