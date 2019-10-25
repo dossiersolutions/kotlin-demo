@@ -55,8 +55,8 @@ object DockerSshUtil {
                         lineParts[0],
                         lineParts[1].removePrefix("/"),
                         parseStatusType(lineParts[2]),
-                        parseDateTime(lineParts[1]),
-                        parseDateTime(lineParts[1]));
+                        parseDateTime(lineParts[3]),
+                        parseDateTime(lineParts[4]));
 
                 containers.add(dockerContainer)
             }
@@ -72,15 +72,15 @@ object DockerSshUtil {
         return StatusType.valueOf(statusStr)
     }
 
-
 //    @JvmStatic
 //    fun main(args: Array<String>) {
 //        println(parseDateTime("2019-03-19T12:22:06.159971014Z"))
 //    }
-//
+
     private fun parseDateTime(dateStr: String): DateTime {
-        val dateFormat: DateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.n")
-        return dateFormat.parse(dateStr).local;
+        val dateStrNoNano = dateStr.subSequence(0, dateStr.indexOf(".")).toString()
+        val dateFormat: DateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        return dateFormat.parse(dateStrNoNano).local;
     }
 
     private fun executeSshCmd(cmd: String) : String {
