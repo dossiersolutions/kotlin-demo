@@ -32,13 +32,13 @@ class BranchesList : RComponent<RProps, RState>() {
                                 + "Url"
                             }
                             th {
+                                + "Branch link"
+                            }
+                            th {
                                 + "Commit message"
                             }
                             th {
                                 + "Commit date"
-                            }
-                            th {
-                                + "Branch link"
                             }
                             th {
                                 + "Actions"
@@ -60,13 +60,19 @@ class BranchesList : RComponent<RProps, RState>() {
                                     }
                                 }
                                 td {
+                                    a {
+                                        attrs {
+                                            href = it.branchLink
+                                        }
+                                        + it.branchLink
+                                    }
+                                    + it.branchLink
+                                }
+                                td {
                                     + it.lastCommitInfo.first
                                 }
                                 td {
                                     + DateTime(it.lastCommitInfo.second).toString(DateFormat.FORMAT_DATE)
-                                }
-                                td {
-                                    + it.branchLink
                                 }
                                 button(classes = "btn btn-danger") {
                                     + "Start pipline"

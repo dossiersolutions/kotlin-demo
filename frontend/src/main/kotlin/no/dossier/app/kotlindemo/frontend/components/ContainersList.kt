@@ -13,7 +13,6 @@ import no.dossier.app.kotlindemo.frontend.contexts.appContext
 import react.dom.*
 import styled.css
 import styled.styledDiv
-import kotlin.browser.window
 
 class ContainersList : RComponent<RProps, RState>() {
 
@@ -67,7 +66,7 @@ class ContainersList : RComponent<RProps, RState>() {
                                         +"Stop container"
                                         attrs {
                                             onClickFunction = {
-
+                                                stopDockerContainer()
                                             }
                                         }
                                     }
