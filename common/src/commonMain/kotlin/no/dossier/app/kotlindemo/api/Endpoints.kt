@@ -40,6 +40,7 @@ enum class RestEndpoint(val value: String) {
             const val GET_DOCKER_CONTAINERS = "/dockercontainers/all"
             const val STOP_DOCKER_CONTAINER = "/dockercontainers/{containerId}/stop"
             const val GET_BB_BRANCHES = "/bitbucket/branches/all"
+            const val START_BB_PIPELINE = "/bitbucket/pipelines/build"
         }
     }
 }

@@ -1,6 +1,6 @@
 package no.dossier.app.kotlindemo.domain.docker
 
-import com.soywiz.klock.DateTime
+import kotlinx.serialization.Serializable
 
 /**
  *
@@ -14,10 +14,11 @@ enum class StatusType{
     created, restarting, running, removing, paused, exited, dead
 }
 
+@Serializable
 data class DockerContainer(
         val id: String,
         val name: String,
         val status: StatusType,
-        val created: DateTime,
-        val startedAt: DateTime
-        )
+        val created: Long,
+        val startedAt: Long
+)

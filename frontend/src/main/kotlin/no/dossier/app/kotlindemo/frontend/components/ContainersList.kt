@@ -1,6 +1,7 @@
 package no.dossier.app.kotlindemo.frontend.components
 
 import com.soywiz.klock.DateFormat
+import com.soywiz.klock.DateTime
 import kotlinx.html.js.onClickFunction
 import no.dossier.app.kotlindemo.frontend.components.stylesheet.ContainersListStyles
 import react.*
@@ -48,19 +49,19 @@ class ContainersList : RComponent<RProps, RState>() {
                         state.dockerContainers.forEach {
                             tr {
                                 td {
-                                    it.id
+                                    +it.id
                                 }
                                 td {
-                                    it.name
+                                    +it.name
                                 }
                                 td {
-                                    it.status.toString()
+                                    +it.status.toString()
                                 }
 //                                td {
 //                                    + "Ports"
 //                                }
                                 td {
-                                    + it.created.toString(DateFormat.FORMAT_DATE)
+                                    + DateTime(it.created).toString(DateFormat.FORMAT_DATE)
                                 }
                                 td {
                                     button(classes = "btn btn-dang") {
