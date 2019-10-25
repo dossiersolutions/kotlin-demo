@@ -11,19 +11,13 @@ d7886598dbe2        crosbymichael/redis:latest   /redis-server --dir    33 minut
  */
 
 enum class StatusType{
-    Running,
-    Paused,
-    Restarting,
-    RemovalInProgress,
-    Dead,
-    Created,
-    Exited
+    created, restarting, running, removing, paused, exited, dead
 }
 
 data class DockerContainer(
         val id: String,
-        val image: String,
-        val command: String,
+        val name: String,
         val status: StatusType,
-        val created: DateTime
+        val created: DateTime,
+        val startedAt: DateTime
         )
