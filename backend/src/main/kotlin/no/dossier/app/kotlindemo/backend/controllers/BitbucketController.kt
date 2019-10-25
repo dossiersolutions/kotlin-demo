@@ -32,7 +32,7 @@ class BitbucketController {
             val message = branchJu.getJsonPathString("$.target.message", "")
             val type = branchJu.getJsonPathString("$.target.type", "")
 
-            val latestCommitInfo = Triple(message, dateTime, type)
+            val latestCommitInfo = Triple(message, dateTime.unixMillisLong, type)
             val bitBucketBranch = BitBucketBranch(branchName, branchUrl, latestCommitInfo)
             branches.add(bitBucketBranch)
         }

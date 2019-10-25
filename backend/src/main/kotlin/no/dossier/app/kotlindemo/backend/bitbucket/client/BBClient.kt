@@ -31,8 +31,7 @@ fun getAccessToken(consumer: Consumer): Authorization? {
     val response: CloseableHttpResponse? = client.execute(request)
     val rawResponse: String = IOUtils.toString(response?.entity?.content, "UTF-8")
     val json = Json(JsonConfiguration.Stable)
-    println("rawResponse")
-    println(rawResponse)
+
     return json.parse(Authorization.serializer(), rawResponse)
 }
 
