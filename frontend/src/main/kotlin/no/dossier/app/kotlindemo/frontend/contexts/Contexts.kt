@@ -11,6 +11,7 @@ val defaultState = object : AppState {
     override var page: Pages = Pages.dockerContainersPage
     override var connected: Boolean = false
     override var loading: Boolean = false
+    override var reload: Boolean = false
     override var connections: MutableList<String> = mutableListOf()
     override var dockerContainers: MutableList<DockerContainer> = mutableListOf()
     override var bitBucketBranches: MutableList<BitBucketBranch> = mutableListOf()

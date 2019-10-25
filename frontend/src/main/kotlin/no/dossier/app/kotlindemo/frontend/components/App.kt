@@ -6,7 +6,6 @@ import react.dom.*
 import kotlin.browser.window
 import kotlinx.serialization.json.*
 import kotlinx.serialization.list
-import kotlinx.serialization.serializer
 import no.dossier.app.kotlindemo.api.*
 import no.dossier.app.kotlindemo.config.AppConfig
 import no.dossier.app.kotlindemo.domain.bitbucket.BitBucketBranch
@@ -22,6 +21,7 @@ interface AppState: RState {
     //variables
     var loading: Boolean
     var page: Pages
+    var reload: Boolean
 
     //actions
     var connected: Boolean
@@ -40,6 +40,7 @@ class App : RComponent<RProps, AppState>() {
     init {
         state.page = Pages.dockerContainersPage
         state.loading = false
+        state.reload = false
         state.connections = mutableListOf()
         state.dockerContainers = mutableListOf()
         state.bitBucketBranches = mutableListOf()
@@ -67,7 +68,7 @@ class App : RComponent<RProps, AppState>() {
         setState{
             loading = true
         }
-        if (state.page === Pages.dockerContainersPage && state.dockerContainers.isEmpty()) {
+        if (state.page === Pages.dockerContainersPage) {
             window.fetch(RestEndpoint.GetAllDockerContainers.value).then {
                 it.text()
             }.then {
@@ -77,8 +78,7 @@ class App : RComponent<RProps, AppState>() {
                     loading = false
                 }
             }
-        }
-        if (state.page === Pages.bitbuckerBranchesPage && state.bitBucketBranches.isEmpty()) {
+        } else if (state.page === Pages.bitbuckerBranchesPage) {
             window.fetch(RestEndpoint.GetAllBitBucketBranches.value).then {
                 it.text()
             }.then {
@@ -118,14 +118,21 @@ class App : RComponent<RProps, AppState>() {
             if (state.loading) {
                 spinner()
             }
-            div(classes = "container") {
+            styledDiv {
+                css {
+                    + AppStyles.mainContainer
+                }
                 styledDiv {
                     css {
                         AppStyles.main
                     }
                     header()
                     menu()
-                    containersList()
+                    if (state.page === Pages.dockerContainersPage) {
+                        containersList()
+                    } else {
+                        branchesList()
+                    }
                     footer()
                 }
             }

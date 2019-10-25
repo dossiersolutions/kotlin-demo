@@ -9,9 +9,12 @@ object AppStyles : StyleSheet("AppStyles") {
         marginBottom = LinearDimension("20px")
     }
     val footer by css {
-        position = Position.fixed
-        bottom = LinearDimension(0.toString())
         height = LinearDimension("40px")
+    }
+    val mainContainer by css {
+        maxWidth = LinearDimension("100%")
+        paddingLeft = LinearDimension("15px")
+        paddingRight = LinearDimension("15px")
     }
     val main by css {
 

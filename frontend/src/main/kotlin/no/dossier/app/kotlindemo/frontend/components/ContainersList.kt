@@ -3,12 +3,17 @@ package no.dossier.app.kotlindemo.frontend.components
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTime
 import kotlinx.html.js.onClickFunction
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.list
+import no.dossier.app.kotlindemo.api.RestEndpoint
+import no.dossier.app.kotlindemo.domain.docker.DockerContainer
 import no.dossier.app.kotlindemo.frontend.components.stylesheet.ContainersListStyles
 import react.*
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
 import react.dom.*
 import styled.css
 import styled.styledDiv
+import kotlin.browser.window
 
 class ContainersList : RComponent<RProps, RState>() {
 
@@ -20,28 +25,25 @@ class ContainersList : RComponent<RProps, RState>() {
         appContext.Consumer { state ->
             styledDiv {
                 css {
-                    + ContainersListStyles.wrapper
+                    +ContainersListStyles.wrapper
                 }
                 table(classes = "table") {
                     thead {
                         tr {
                             th {
-                                + "Container id"
+                                +"Container id"
                             }
                             th {
-                                + "Names"
+                                +"Names"
                             }
                             th {
-                                + "Status"
-                            }
-//                            th {
-//                                + "Ports"
-//                            }
-                            th {
-                                + "Created at"
+                                +"Status"
                             }
                             th {
-                                + "Actions"
+                                +"Created at"
+                            }
+                            th {
+                                +"Actions"
                             }
                         }
                     }
@@ -57,18 +59,15 @@ class ContainersList : RComponent<RProps, RState>() {
                                 td {
                                     +it.status.toString()
                                 }
-//                                td {
-//                                    + "Ports"
-//                                }
                                 td {
-                                    + DateTime(it.created).toString(DateFormat.FORMAT_DATE)
+                                    +DateTime(it.created).toString(DateFormat.FORMAT_DATE)
                                 }
                                 td {
-                                    button(classes = "btn btn-dang") {
-                                        + "Stop container"
+                                    button(classes = "btn btn-danger") {
+                                        +"Stop container"
                                         attrs {
                                             onClickFunction = {
-                                                stopDockerContainer()
+
                                             }
                                         }
                                     }
