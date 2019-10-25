@@ -8,6 +8,11 @@ object AppStyles : StyleSheet("AppStyles") {
         marginTop = LinearDimension("20px")
         marginBottom = LinearDimension("20px")
     }
+    val footer by css {
+        position = Position.absolute
+        bottom = LinearDimension(0.toString())
+        height = LinearDimension("40px")
+    }
     val main by css {
 
     }

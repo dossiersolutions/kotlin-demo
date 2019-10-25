@@ -11,8 +11,11 @@ import kotlinx.serialization.serializer
 import no.dossier.app.kotlindemo.api.*
 import no.dossier.app.kotlindemo.config.AppConfig
 import no.dossier.app.kotlindemo.domain.docker.DockerContainer
+import no.dossier.app.kotlindemo.frontend.components.stylesheet.AppStyles
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
 import no.dossier.app.kotlindemo.frontend.wrappers.*
+import styled.css
+import styled.styledDiv
 
 interface AppState: RState {
     //variables
@@ -38,7 +41,7 @@ class App : RComponent<RProps, AppState>() {
 
     @ImplicitReflectionSerializer
     override fun componentDidMount() {
-        window.fetch(RestEndpoint.GetAllConnections.value).then {
+        window.fetch(RestEndpoint.GetAllDockerContainers.value).then {
             it.text()
         }.then {
             setState {
@@ -76,9 +79,14 @@ class App : RComponent<RProps, AppState>() {
                 spinner()
             }
             div(classes = "container") {
-                header()
-                containersList()
-                footer()
+                styledDiv {
+                    css {
+                        AppStyles.main
+                    }
+                    header()
+                    containersList()
+                    footer()
+                }
             }
 
         }
