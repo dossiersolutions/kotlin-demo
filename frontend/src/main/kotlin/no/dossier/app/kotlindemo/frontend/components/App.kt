@@ -51,31 +51,31 @@ class App : RComponent<RProps, AppState>() {
         }
     }
 
-//    @ImplicitReflectionSerializer
-//    override fun componentDidMount() {
-//        setState{
-//            loading = true
-//        }
-//        if (state.page === Pages.dockerContainersPage) {
-//            window.fetch(RestEndpoint.GetAllDockerContainers.value).then {
-//                it.text()
-//            }.then {
-//                setState {
-//                    dockerContainers = Json.parse(DockerContainer::class.serializer().list, it).toMutableList()
-//                    loading = false
-//                }
-//            }
-//        } else {
-//            window.fetch(RestEndpoint.GetAllBitBucketBranches.value).then {
-//                it.text()
-//            }.then {
-//                setState {
-//                    bitBucketBranches = Json.parse(BitBucketBranch::class.serializer().list, it).toMutableList()
-//                    loading = false
-//                }
-//            }
-//        }
-//    }
+    @ImplicitReflectionSerializer
+    override fun componentDidMount() {
+        setState{
+            loading = true
+        }
+        if (state.page === Pages.dockerContainersPage) {
+            window.fetch(RestEndpoint.GetAllDockerContainers.value).then {
+                it.text()
+            }.then {
+                setState {
+                    dockerContainers = Json.parse(DockerContainer::class.serializer().list, it).toMutableList()
+                    loading = false
+                }
+            }
+        } else {
+            window.fetch(RestEndpoint.GetAllBitBucketBranches.value).then {
+                it.text()
+            }.then {
+                setState {
+                    bitBucketBranches = Json.parse(BitBucketBranch::class.serializer().list, it).toMutableList()
+                    loading = false
+                }
+            }
+        }
+    }
 
     private fun handleSendMessage(message: String) {
         stompClient.send(WsEndpoint.SendChatMessage.prefixedUrl,
