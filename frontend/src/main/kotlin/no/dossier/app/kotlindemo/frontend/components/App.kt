@@ -61,7 +61,8 @@ class App : RComponent<RProps, AppState>() {
                 it.text()
             }.then {
                 setState {
-                    dockerContainers = Json.parse(DockerContainer::class.serializer().list, it).toMutableList()
+                    dockerContainers = Json.parse(DockerContainer.serializer().list, it).toMutableList()
+                    console.log(dockerContainers)
                     loading = false
                 }
             }
@@ -70,7 +71,7 @@ class App : RComponent<RProps, AppState>() {
                 it.text()
             }.then {
                 setState {
-                    bitBucketBranches = Json.parse(BitBucketBranch::class.serializer().list, it).toMutableList()
+                    bitBucketBranches = Json.parse(BitBucketBranch.serializer().list, it).toMutableList()
                     loading = false
                 }
             }

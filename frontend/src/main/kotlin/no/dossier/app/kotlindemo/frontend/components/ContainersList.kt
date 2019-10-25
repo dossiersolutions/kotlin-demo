@@ -49,19 +49,19 @@ class ContainersList : RComponent<RProps, RState>() {
                         state.dockerContainers.forEach {
                             tr {
                                 td {
-                                    it.id
+                                    +it.id
                                 }
                                 td {
-                                    it.name
+                                    +it.name
                                 }
                                 td {
-                                    it.status.toString()
+                                    +it.status.toString()
                                 }
 //                                td {
 //                                    + "Ports"
 //                                }
                                 td {
-                                    + it.created.toString(DateFormat.FORMAT_DATE)
+                                    + DateTime(it.created).toString(DateFormat.FORMAT_DATE)
                                 }
                                 td {
                                     button(classes = "btn btn-dang") {
