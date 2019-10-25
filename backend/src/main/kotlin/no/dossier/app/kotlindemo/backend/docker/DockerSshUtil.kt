@@ -42,14 +42,14 @@ object DockerSshUtil {
 
 
     fun getDockerContainers(): List<DockerContainer> {
-        val stdout = executeSshCmd("docker ps -q | xargs docker inspect --format='{{.Id}}|{{.State.StartedAt}}|{{.Name}}'")
+        val stdout = executeSshCmd("docker ps -q | xargs docker inspect --format='{{.Id}}|{{.State.StartedAt}}|{{.Name}}|{{.State.Status}}'")
 
         val containers = ArrayList<DockerContainer>()
         val lines = stdout.split("\n")
         for (line in lines) {
             val lineParts = line.split("|")
-            if (lineParts.size == 3) {
-                val dockerContainer = DockerContainer(lineParts[0], lineParts[2].removePrefix("/"), parseDate(lineParts[1]));
+            if (lineParts.size == 4) {
+                val dockerContainer = DockerContainer(lineParts[0], lineParts[2].removePrefix("/"), lineParts[3], parseDate(lineParts[1]));
                 containers.add(dockerContainer)
             }
         }
