@@ -66,7 +66,6 @@ class BranchesList : RComponent<RProps, RState>() {
                                         }
                                         + it.branchLink
                                     }
-                                    + it.branchLink
                                 }
                                 td {
                                     + it.lastCommitInfo.first

@@ -38,7 +38,7 @@ class App : RComponent<RProps, AppState>() {
     private var stompClient: Stomp = connect()
 
     init {
-        state.page = Pages.bitbuckerBranchesPage
+        state.page = Pages.dockerContainersPage
         state.loading = false
         state.reload = false
         state.connections = mutableListOf()
