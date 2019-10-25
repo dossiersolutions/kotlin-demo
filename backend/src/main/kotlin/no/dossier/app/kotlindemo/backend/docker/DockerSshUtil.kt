@@ -55,8 +55,8 @@ object DockerSshUtil {
                         lineParts[0],
                         lineParts[1].removePrefix("/"),
                         parseStatusType(lineParts[2]),
-                        parseDateTime(lineParts[3]),
-                        parseDateTime(lineParts[4]));
+                        parseDateTime(lineParts[3]).unixMillisLong,
+                        parseDateTime(lineParts[4]).unixMillisLong)
 
                 containers.add(dockerContainer)
             }

@@ -1,5 +1,6 @@
 package no.dossier.app.kotlindemo.frontend.components
 
+import com.soywiz.klock.DateTime
 import no.dossier.app.kotlindemo.frontend.components.stylesheet.ContainersListStyles
 import react.*
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
@@ -53,7 +54,7 @@ class ContainersList : RComponent<RProps, RState>() {
                                     + "Ports"
                                 }
                                 td {
-                                    + it.created.toString()
+                                    + DateTime(it.created).toString()
                                 }
                                 td {
                                     + "Actions - $it"
