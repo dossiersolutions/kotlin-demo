@@ -7,5 +7,6 @@ data class BitBucketBranch(
         val name: String,
         val url: String,
         // first: commit message, second: dateTime of commit, third: type of commit
-        val lastCommitInfo: Triple<String, Long, String>
+        val lastCommitInfo: Triple<String, Long, String>,
+        val branchLink: String
 )

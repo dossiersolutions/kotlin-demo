@@ -7,9 +7,7 @@ import no.dossier.app.kotlindemo.backend.bitbucket.client.startPipelineBuild
 import no.dossier.app.kotlindemo.domain.bitbucket.BitBucketBranch
 import no.dossier.app.kotlindemo.util.parseBitBucketDateTime
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
-
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -33,15 +31,22 @@ class BitbucketController {
             val message = branchJu.getJsonPathString("$.target.message", "")
             val type = branchJu.getJsonPathString("$.target.type", "")
 
+            val branchLink = "http://internal.dossier.no/" + branchName
+                    .replace("-", "")
+                    .replace("_", "")
+                    .replace(" ", "")
+                    .replace("/", "")
+                    .toLowerCase()
+
             val latestCommitInfo = Triple(message, dateTime.unixMillisLong, type)
-            val bitBucketBranch = BitBucketBranch(branchName, branchUrl, latestCommitInfo)
+            val bitBucketBranch = BitBucketBranch(branchName, branchUrl, latestCommitInfo, branchLink)
             branches.add(bitBucketBranch)
         }
         return branches
     }
 
     @GetMapping(RestEndpoint.Urls.START_BB_PIPELINE)
-    fun getStartPipelineBuild(@RequestParam branchName: String){
+    fun getStartPipelineBuild(@RequestParam branchName: String) {
         startPipelineBuild(branchName)
     }
 }
