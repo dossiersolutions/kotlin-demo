@@ -1,5 +1,6 @@
 package no.dossier.app.kotlindemo.frontend.components
 
+import com.soywiz.klock.DateFormat
 import kotlinx.html.js.onClickFunction
 import no.dossier.app.kotlindemo.frontend.components.stylesheet.ContainersListStyles
 import react.*
@@ -59,7 +60,7 @@ class ContainersList : RComponent<RProps, RState>() {
 //                                    + "Ports"
 //                                }
                                 td {
-                                    + it.created.toString()
+                                    + it.created.toString(DateFormat.FORMAT_DATE)
                                 }
                                 td {
                                     button(classes = "btn btn-dang") {
