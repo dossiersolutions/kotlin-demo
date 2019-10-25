@@ -53,10 +53,21 @@ class App : RComponent<RProps, AppState>() {
 
     @ImplicitReflectionSerializer
     override fun componentDidMount() {
+        fetchData()
+    }
+
+    @ImplicitReflectionSerializer
+    override fun componentDidUpdate(prevProps: RProps, prevState: AppState, snapshot: Any) {
+        if (prevState.page !== state.page) {
+            fetchData();
+        }
+    }
+
+    private fun fetchData() {
         setState{
             loading = true
         }
-        if (state.page === Pages.dockerContainersPage) {
+        if (state.page === Pages.dockerContainersPage && state.dockerContainers.isEmpty()) {
             window.fetch(RestEndpoint.GetAllDockerContainers.value).then {
                 it.text()
             }.then {
@@ -65,7 +76,8 @@ class App : RComponent<RProps, AppState>() {
                     loading = false
                 }
             }
-        } else {
+        }
+        if (state.page === Pages.bitbuckerBranchesPage && state.bitBucketBranches.isEmpty()) {
             window.fetch(RestEndpoint.GetAllBitBucketBranches.value).then {
                 it.text()
             }.then {
