@@ -1,7 +1,7 @@
 package no.dossier.app.kotlindemo.frontend.components
 
+import kotlinx.html.style
 import kotlinx.serialization.ImplicitReflectionSerializer
-import no.dossier.app.kotlindemo.domain.User
 import react.*
 import react.dom.*
 import kotlin.browser.window
@@ -15,13 +15,10 @@ import no.dossier.app.kotlindemo.frontend.wrappers.*
 
 interface AppState: RState {
     //variables
-    var fetchedUser: User?
-    var connected: Boolean
-    var connections: MutableList<String>
-    var chatContent: String
 
     //actions
-    var sendChatMessage: (String) -> Unit
+    var connected: Boolean
+    var connections: MutableList<String>
 }
 
 class App : RComponent<RProps, AppState>() {
@@ -32,8 +29,6 @@ class App : RComponent<RProps, AppState>() {
 
     init {
         state.connections = mutableListOf()
-        state.sendChatMessage = ::handleSendMessage
-        state.chatContent = ""
     }
 
     private fun handleSendMessage(message: String) {
@@ -59,62 +54,11 @@ class App : RComponent<RProps, AppState>() {
         }
     }
 
-    override fun componentDidMount() {
-        window.fetch(RestEndpoint.GetUser.value.replace("{userId}", 1.toString())).then {
-            it.text()
-        }.then {
-            setState {
-                fetchedUser = Json.nonstrict.parse(User.serializer(), it)
-            }
-        }
-    }
-
-    @ImplicitReflectionSerializer
-    override fun componentDidUpdate(prevProps: RProps, prevState: AppState, snapshot: Any) {
-        if (!prevState.connected && state.connected) {
-            stompClient.subscribe(Topic.UserInfo.value) { data ->
-                setState {
-                    val message = Json.parse(Message.ConnectionUpdated.serializer(), data.body)
-                    when (message.eventType) {
-                        EventType.NewConnection -> connections.add(message.connectionId)
-                        EventType.ConnectionClosed -> connections.remove(message.connectionId)
-                    }
-                }
-            }
-
-            stompClient.subscribe(Topic.Chat.value) { data ->
-                setState {
-                    val message = Json.parse(Message.ChatMessage.serializer(), data.body)
-                    chatContent += "${message.timeStamp}: ${message.message}\n"
-                }
-            }
-
-            window.fetch(RestEndpoint.GetAllConnections.value).then {
-                it.text()
-            }.then {
-                setState {
-                    connections = Json.parse(String::class.serializer().list, it).toMutableList()
-                }
-            }
-        }
-    }
-
     override fun RBuilder.render() {
         appContext.Provider(state) {
             h1 {
                 +"Kotlin demo"
             }
-            h3 {
-                +User("Hanses", "Oddvindsen").formattedName
-            }
-            h3 {
-                +(state.fetchedUser?.formattedName ?: "")
-            }
-            h3 {
-                +"Active connections: "
-            }
-            connectionsList()
-            chat()
         }
     }
 }

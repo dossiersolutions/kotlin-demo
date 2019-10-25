@@ -8,6 +8,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    jcenter()
     maven { url = uri(Repositories.kotlin_kotlinx) }
 }
 
@@ -27,6 +28,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
                 implementation(Dependencies.kotlinx_serialization_runtime_common)
+                implementation(Dependencies.klock_common)
+                implementation(Dependencies.klock_metadata)
             }
         }
         val commonTest by getting {
@@ -40,6 +43,7 @@ kotlin {
             dependencies {
                 implementation(Dependencies.kotlinx_serialization_runtime_jvm)
                 implementation(kotlin("stdlib-jdk8"))
+                implementation(Dependencies.klock_jvm)
             }
         }
 

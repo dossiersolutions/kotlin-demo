@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller
 import java.util.*
 
 @Controller
-class ChatController {
+class StatusController {
 
     @MessageMapping(WsEndpoint.Urls.SEND_CHAT_MESSAGE)
     @SendTo(Topic.Urls.CHAT)

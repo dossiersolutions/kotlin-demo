@@ -15,6 +15,7 @@ plugins {
 
 repositories {
 	mavenCentral()
+	jcenter()
 	maven { url = uri(Repositories.spring_snapshot) }
 	maven { url = uri(Repositories.spring_milestone) }
 	maven { url = uri(Repositories.kotlin_kotlinx) }
@@ -33,6 +34,7 @@ kotlin {
 				implementation(Dependencies.jackson_module_kotlin)
 				implementation(Dependencies.kotlinx_serialization_runtime_jvm)
 				implementation("org.springframework.boot:spring-boot-devtools")
+				implementation(Dependencies.klock_jvm)
 			}
 		}
 		val test by getting {

@@ -1,4 +1,9 @@
 object Dependencies {
+    const val klock_jvm = "com.soywiz.korlibs.klock:klock-jvm:${Versions.klock_version}"
+    const val klock_js = "com.soywiz.korlibs.klock:klock-js:${Versions.klock_version}"
+
+    const val klock_common = "com.soywiz.korlibs.klock:klock:${Versions.klock_version}"
+    const val klock_metadata = "com.soywiz.korlibs.klock:klock-metadata:${Versions.klock_version}"
     const val kotlinx_serialization_runtime_common
             = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:${Versions.kotlinx_serialization_runtime}"
     const val kotlinx_serialization_runtime_jvm
