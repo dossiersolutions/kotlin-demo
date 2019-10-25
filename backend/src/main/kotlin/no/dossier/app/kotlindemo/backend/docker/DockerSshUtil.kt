@@ -68,14 +68,4 @@ object DockerSshUtil {
         val shell = Ssh("internal.dossier.no", 22, "ec2-user", SSH_KEY, "ec2-user")
         return Shell.Plain(shell).exec(cmd);
     }
-
-    @Throws(IOException::class)
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val containers = getDockerContainers();
-
-        for (c in containers) {
-            println("${c.id}")
-        }
-    }
 }
