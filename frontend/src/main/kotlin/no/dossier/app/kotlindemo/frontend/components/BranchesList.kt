@@ -65,8 +65,8 @@ class BranchesList : RComponent<RProps, RState>() {
                                 button(classes = "btn btn-danger") {
                                     + "Start pipline"
                                     attrs {
-                                        onClickFunction = (name) = >{
-                                            startPipLine(it.name)
+                                        onClickFunction = {
+                                            startPipLine()
                                         }
                                     }
                                 }
