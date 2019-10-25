@@ -10,6 +10,7 @@ import kotlinx.serialization.list
 import kotlinx.serialization.serializer
 import no.dossier.app.kotlindemo.api.*
 import no.dossier.app.kotlindemo.config.AppConfig
+import no.dossier.app.kotlindemo.domain.docker.DockerContainer
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
 import no.dossier.app.kotlindemo.frontend.wrappers.*
 
@@ -19,6 +20,7 @@ interface AppState: RState {
     //actions
     var connected: Boolean
     var connections: MutableList<String>
+    var dockerContainers: MutableList<DockerContainer>
     var loading: Boolean
 }
 
@@ -29,8 +31,9 @@ class App : RComponent<RProps, AppState>() {
     private var stompClient: Stomp = connect()
 
     init {
-        state.loading = true
+        state.loading = false
         state.connections = mutableListOf()
+        state.dockerContainers = mutableListOf()
     }
 
     private fun handleSendMessage(message: String) {

@@ -1,59 +1,65 @@
 package no.dossier.app.kotlindemo.frontend.components
 
+import no.dossier.app.kotlindemo.frontend.components.stylesheet.ContainersListStyles
 import react.*
 import no.dossier.app.kotlindemo.frontend.contexts.appContext
 import react.dom.*
+import styled.css
+import styled.styledDiv
 
 class ContainersList : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         appContext.Consumer { state ->
-            div (classes = "container-list-wrapper") {
-                table {
+            styledDiv {
+                css {
+                    + ContainersListStyles.wrapper
+                }
+                table(classes = "table") {
                     thead {
-                        th {
-                            td {
+                        tr {
+                            th {
                                 + "Container id"
                             }
-                            td {
-                                + "Name"
+                            th {
+                                + "Names"
                             }
-                            td {
+                            th {
                                 + "Status"
                             }
-                            td {
+                            th {
                                 + "Image"
                             }
-                            td {
+                            th {
                                 + "Ports"
                             }
-                            td {
+                            th {
                                 + "Created at"
                             }
-                            td {
+                            th {
                                 + "Actions"
                             }
                         }
                     }
                     tbody {
-                        state.connections.forEach {
+                        state.dockerContainers.forEach {
                             tr {
                                 td {
-                                    + "Container id - $it"
+                                    it.id
                                 }
                                 td {
-                                    + "Name - $it"
+                                    + "Name"
                                 }
                                 td {
-                                    + "Status - $it"
+                                    it.status.toString()
                                 }
                                 td {
-                                    + "Image - $it"
+                                    it.image
                                 }
                                 td {
-                                    + "Ports - $it"
+                                    + "Ports"
                                 }
                                 td {
-                                    + "Created at - $it"
+                                    + it.created.toString()
                                 }
                                 td {
                                     + "Actions - $it"
