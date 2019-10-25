@@ -8,6 +8,7 @@ import kotlinx.serialization.json.*
 import org.apache.commons.io.IOUtils
 import org.apache.http.NameValuePair
 import org.apache.http.client.entity.UrlEncodedFormEntity
+import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.message.BasicNameValuePair
 import java.util.ArrayList
@@ -25,10 +26,24 @@ fun getAccessToken(consumer: Consumer): Authorization? {
     request.entity = UrlEncodedFormEntity(params)
 
     val response: CloseableHttpResponse? = client.execute(request)
-    val rawResponse: String = IOUtils.toString(response?.entity?.content,"UTF-8")
+    val rawResponse: String = IOUtils.toString(response?.entity?.content, "UTF-8")
     val json = Json(JsonConfiguration.Stable)
     println("rawResponse")
     println(rawResponse)
     return json.parse(Authorization.serializer(), rawResponse)
+}
 
+
+fun getAllBranches(): String {
+    val consumer = Consumer("", "")
+    val authorization = getAccessToken(consumer)
+
+    val client = HttpClientBuilder.create().build()
+    val request = HttpGet("https://api.bitbucket.org/2.0/teams?role=member")
+
+    request.addHeader("Content-Type", "application/json")
+    request.addHeader("Authorization", "Bearer " + authorization?.accessToken)
+
+    val response: CloseableHttpResponse? = client.execute(request)
+    return IOUtils.toString(response?.entity?.content, "UTF-8")
 }
