@@ -19,6 +19,7 @@ repositories {
 	maven { url = uri(Repositories.spring_snapshot) }
 	maven { url = uri(Repositories.spring_milestone) }
 	maven { url = uri(Repositories.kotlin_kotlinx) }
+	maven { url = uri(Repositories.jcabi_ssh) }
 }
 
 kotlin {
@@ -35,6 +36,7 @@ kotlin {
 				implementation(Dependencies.kotlinx_serialization_runtime_jvm)
 				implementation("org.springframework.boot:spring-boot-devtools")
 				implementation(Dependencies.klock_jvm)
+				implementation("com.jcabi:jcabi-ssh:1.6.1")
 			}
 		}
 		val test by getting {
