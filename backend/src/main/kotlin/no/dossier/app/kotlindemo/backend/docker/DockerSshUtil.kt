@@ -42,8 +42,7 @@ object DockerSshUtil {
 
 
     fun getDockerContainers(): List<DockerContainer> {
-        val shell = Ssh("internal.dossier.no", 22, "ec2-user", SSH_KEY, "ec2-user")
-        val stdout = Shell.Plain(shell).exec("docker ps -q | xargs docker inspect --format='{{.Id}}|{{.State.StartedAt}}|{{.Name}}'")
+        val stdout = executeSshCmd("docker ps -q | xargs docker inspect --format='{{.Id}}|{{.State.StartedAt}}|{{.Name}}'")
 
         val containers = ArrayList<DockerContainer>()
         val lines = stdout.split("\n")
@@ -57,8 +56,17 @@ object DockerSshUtil {
         return containers
     }
 
+    fun stopContainer(containerId: String): String {
+        return executeSshCmd("docker stop $containerId");
+    }
+
     fun parseDate(dateStr: String): LocalDate {
         return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.n'Z'"))
+    }
+
+    fun executeSshCmd(cmd: String) : String {
+        val shell = Ssh("internal.dossier.no", 22, "ec2-user", SSH_KEY, "ec2-user")
+        return Shell.Plain(shell).exec(cmd);
     }
 
     @Throws(IOException::class)
@@ -67,7 +75,7 @@ object DockerSshUtil {
         val containers = getDockerContainers();
 
         for (c in containers) {
-            println("$c")
+            println("${c.id}")
         }
     }
 }
