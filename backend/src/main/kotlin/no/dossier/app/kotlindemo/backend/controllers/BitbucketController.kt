@@ -8,6 +8,7 @@ import no.dossier.app.kotlindemo.domain.bitbucket.BitBucketBranch
 import no.dossier.app.kotlindemo.util.parseBitBucketDateTime
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 
 import org.springframework.web.bind.annotation.RestController
 
@@ -40,7 +41,7 @@ class BitbucketController {
     }
 
     @GetMapping(RestEndpoint.Urls.START_BB_PIPELINE)
-    fun getStartPipelineBuild(@PathVariable branchName: String){
+    fun getStartPipelineBuild(@RequestParam branchName: String){
         startPipelineBuild(branchName)
     }
 }
