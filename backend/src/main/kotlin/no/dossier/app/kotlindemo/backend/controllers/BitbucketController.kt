@@ -1,6 +1,8 @@
 package no.dossier.app.kotlindemo.backend.controllers
 
 import no.dossier.app.kotlindemo.api.RestEndpoint
+import no.dossier.app.kotlindemo.backend.bitbucket.client.JsonUtil
+import no.dossier.app.kotlindemo.backend.bitbucket.client.getAllBranches
 import no.dossier.app.kotlindemo.domain.bitbucket.BitBucketBranch
 import org.springframework.web.bind.annotation.GetMapping
 
@@ -10,7 +12,19 @@ import org.springframework.web.bind.annotation.RestController
 class BitbucketController {
 
     @GetMapping(RestEndpoint.Urls.GET_BB_BRANCHES)
-    fun getAllDockerContainers(): List<BitBucketBranch> {
-        return emptyList()
+    fun getAllBitbucketBranches(): List<BitBucketBranch> {
+        val rawData = getAllBranches()
+        val ju = JsonUtil(rawData)
+        val branchesJson = ju.split("$.values")
+
+        val branches = ArrayList<BitBucketBranch>()
+        for (branchJson in branchesJson) {
+            val branchJu = JsonUtil(branchJson)
+            val branchName = branchJu.getJsonPathString("$.name", "");
+            val branchUrl = branchJu.getJsonPathString("$.links.html.href", "");
+            val bitBucketBranch: BitBucketBranch = BitBucketBranch(branchName, branchUrl)
+            branches.add(bitBucketBranch)
+        }
+        return branches
     }
 }
