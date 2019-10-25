@@ -7,6 +7,8 @@ object Versions {
 
     const val kotlin_react = "16.9.0-pre.83-kotlin-1.3.50"
 
+    const val kotlin_styled = "1.0.0-pre.86-kotlin-1.3.50"
+
     const val core_js = "3.1.1"
     const val react = "^16.6.0"
 }

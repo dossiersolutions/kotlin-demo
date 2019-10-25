@@ -19,6 +19,7 @@ interface AppState: RState {
     var connected: Boolean
     var connections: MutableList<String>
     var chatContent: String
+    var loading: Boolean
 
     //actions
     var sendChatMessage: (String) -> Unit
@@ -31,6 +32,7 @@ class App : RComponent<RProps, AppState>() {
     private var stompClient: Stomp = connect()
 
     init {
+        state.loading = true
         state.connections = mutableListOf()
         state.sendChatMessage = ::handleSendMessage
         state.chatContent = ""
@@ -101,20 +103,15 @@ class App : RComponent<RProps, AppState>() {
 
     override fun RBuilder.render() {
         appContext.Provider(state) {
-            h1 {
-                +"Kotlin demo"
+            if (state.loading) {
+                spinner()
             }
-            h3 {
-                +User("Hanses", "Oddvindsen").formattedName
+            div(classes = "container") {
+                header()
+                containersList()
+                footer()
             }
-            h3 {
-                +(state.fetchedUser?.formattedName ?: "")
-            }
-            h3 {
-                +"Active connections: "
-            }
-            connectionsList()
-            chat()
+
         }
     }
 }

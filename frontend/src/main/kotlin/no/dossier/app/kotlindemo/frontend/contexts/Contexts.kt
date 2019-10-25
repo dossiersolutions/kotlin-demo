@@ -8,6 +8,7 @@ val defaultState = object : AppState {
     override var sendChatMessage: (String) -> Unit = { }
     override var fetchedUser: User? = null
     override var connected: Boolean = false
+    override var loading: Boolean = false
     override var connections: MutableList<String> = mutableListOf()
     override var chatContent: String = ""
 }

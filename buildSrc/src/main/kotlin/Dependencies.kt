@@ -5,6 +5,8 @@ object Dependencies {
             = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Versions.kotlinx_serialization_runtime}"
     const val kotlinx_serialization_runtime_js
             = "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:${Versions.kotlinx_serialization_runtime}"
+    const val kotlin_styled
+            = "org.jetbrains:kotlin-styled:${Versions.kotlin_styled}"
 
     const val spring_boot_starter = "org.springframework.boot:spring-boot-starter"
     const val spring_boot_starter_web = "org.springframework.boot:spring-boot-starter-web"
