@@ -1,17 +1,18 @@
 package no.dossier.app.kotlindemo.backend.bitbucket.client
 
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import no.dossier.app.kotlindemo.backend.bitbucket.auth.Authorization
 import no.dossier.app.kotlindemo.backend.bitbucket.auth.Consumer
-import org.apache.http.client.methods.CloseableHttpResponse
-import org.apache.http.impl.client.HttpClientBuilder
-import kotlinx.serialization.json.*
 import org.apache.commons.io.IOUtils
 import org.apache.http.NameValuePair
 import org.apache.http.client.entity.UrlEncodedFormEntity
+import org.apache.http.client.methods.CloseableHttpResponse
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.client.methods.HttpPost
+import org.apache.http.impl.client.HttpClientBuilder
 import org.apache.http.message.BasicNameValuePair
-import java.util.ArrayList
+import java.util.*
 
 
 fun getAccessToken(consumer: Consumer): Authorization? {
@@ -39,7 +40,7 @@ fun getAllBranches(): String {
     val authorization = getAccessToken(consumer)
 
     val client = HttpClientBuilder.create().build()
-    val request = HttpGet("https://api.bitbucket.org/2.0/teams?role=member")
+    val request = HttpGet("https://api.bitbucket.org/2.0/repositories/dossiersolutions/dossier-profile/refs/branches?pagelen=100")
 
     request.addHeader("Content-Type", "application/json")
     request.addHeader("Authorization", "Bearer " + authorization?.accessToken)
