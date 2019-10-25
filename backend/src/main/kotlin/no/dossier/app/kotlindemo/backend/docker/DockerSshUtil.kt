@@ -50,7 +50,7 @@ object DockerSshUtil {
         for (line in lines) {
             val lineParts = line.split("|")
             if (lineParts.size == 3) {
-                val dockerContainer = DockerContainer(lineParts[0], lineParts[2], parseDate(lineParts[1]));
+                val dockerContainer = DockerContainer(lineParts[0], lineParts[2].removePrefix("/"), parseDate(lineParts[1]));
                 containers.add(dockerContainer)
             }
         }
